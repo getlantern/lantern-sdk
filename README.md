@@ -117,8 +117,6 @@ class MyVpnService : VpnService(), VpnConnectionListener {
         builder.addAddress("10.0.0.2", 24)
         builder.addRoute("0.0.0.0", 0)  // Route all traffic through VPN
 
-        // Establish VPN connection
-        vpnInterface = builder.establish()
         // Add IP ranges, domains, or apps to be redirected
         lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
         lanternTunnel.addDomainToTunnel("example.com")
@@ -135,6 +133,8 @@ class MyVpnService : VpnService(), VpnConnectionListener {
                 return packet
             }
         })
+        // Establish VPN connection
+        vpnInterface = builder.establish()
         // Provide the interface to the SDK to start forwarding packets
         lanternTunnel.startForwarding(vpnInterface)
      }
