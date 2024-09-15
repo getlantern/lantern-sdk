@@ -1,9 +1,9 @@
 # Overview
-The Lantern SDK provides access to the infrastructure of the Lantern circumvention tool. It is intended to be used by partners and third parties that want to use Lantern as an alternative or backup route for VPN and proxy traffic.
+The Lantern SDK provides access to the infrastructure of the Lantern circumvention tool. It is intended to be used by partners and third parties that want to use Lantern as an alternative or backup route for tunneling traffic.
 
 ## High-Level Overview
 
-1. Lantern will generate an API key for each partner that integrates the SDK that is tied to usage data to distinguish traffic among partners.
+1. Lantern will generate an API key for each partner to use that integrates the SDK that is tied to usage data to distinguish traffic.
 2. The SDK exposes an API that handles routing traffic through Lantern's infrastructure. It can be configured to work with traditional VPN tunneling along with an HTTP/SOCKS system proxy.
 2. In tunnel mode, the SDK runs alongside a host VPN service and is able to redirect traffic without having to setup its own connection.
 4. In system proxy mode, Lantern starts local HTTP and SOCKS proxies that partner apps can choose to redirect traffic to that is forwarded to Lantern's infrastructure.
