@@ -59,13 +59,11 @@ interface PacketInterceptor {
 }
 ```
 
-2. Start Proxy
+## Start Proxy
 
 Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies to Lantern's infrastructure.
 - onSuccess: Callback function invoked after starting the local proxy. Returns a ProxyInfo object containing the addresses of the local HTTP and SOCKS proxies.
 - onFailure: Callback function providing an error message when the local proxy fails to start.
-
-4. Monitor connection
 
 
 ## Add the Lantern SDK to your Android app
