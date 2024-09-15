@@ -4,7 +4,6 @@ The Lantern SDK provides access to the infrastructure of the Lantern circumventi
 ## High-Level Overview
 
 1. For each partner that wants to integrate the SDK, Lantern will generate an API key that is tied to usage data to distinguish traffic among providers.
-2. Each API key is tied to usage data such as bandwidth. 
 2. The SDK exposes an API that handles tunneling traffic through Lantern's infrastructure.
 3. 
 
@@ -39,9 +38,9 @@ interface LanternSDK {
 
 2. Start Proxy
 
-Start local HTTP and SOCKS proxies. You can choose to redirect traffic via these proxies.
+Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies to Lantern's infrastructure.
 - onSuccess: Callback function invoked after starting the local proxy. Returns a ProxyInfo object containing the addresses of the local HTTP and SOCKS proxies.
-- onFailure: Callback function providing an error message when the proxy fails to start.
+- onFailure: Callback function providing an error message when the local proxy fails to start.
 
 Below is an example of how you would integrate the SDK on Android.
 
