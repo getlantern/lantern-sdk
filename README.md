@@ -59,13 +59,6 @@ interface PacketInterceptor {
 }
 ```
 
-## Start Proxy
-
-Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies to Lantern's infrastructure.
-- onSuccess: Callback function invoked after starting the local proxy. Returns a ProxyInfo object containing the addresses of the local HTTP and SOCKS proxies.
-- onFailure: Callback function providing an error message when the local proxy fails to start.
-
-
 ## Add the Lantern SDK to your Android app
 
 1. In your module (app-level) Gradle file, add the dependency for the Lantern library:
@@ -146,7 +139,9 @@ class MyVpnService : VpnService() {
 }
 ``` 
 
-4. System proxy mode: Start Lantern local HTTP and SOCKS proxies
+4. System proxy mode: Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies to Lantern's infrastructure.
+- onSuccess: Callback function invoked after starting the local proxy. Returns a ProxyInfo object containing the addresses of the local HTTP and SOCKS proxies.
+- onFailure: Callback function providing an error message when the local proxy fails to start.
 
 ```Kotlin
 import org.getlantern.lantern.sdk.Lantern
