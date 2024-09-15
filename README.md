@@ -86,7 +86,7 @@ fun startLantern() {
             Toast.makeText(this, "Proxies started on HTTP:${proxyInfo.httpProxyPort} and SOCKS:${proxyInfo.socksProxyPort}", Toast.LENGTH_LONG).show()
             
             // Optionally set system proxy
-            setSystemProxy(proxyInfo)
+            Lantern.setSystemProxy(proxyInfo)
         },
         onFailure = { error ->
             Toast.makeText(this, "Failed to start Lantern proxy: $error", Toast.LENGTH_SHORT).show()
