@@ -5,7 +5,7 @@ The Lantern SDK provides access to the infrastructure of the Lantern circumventi
 
 1. For each partner that wants to integrate the SDK, Lantern will generate an API key that is tied to usage data to distinguish traffic among providers.
 2. The SDK exposes an API that handles tunneling traffic through Lantern's infrastructure.
-3. 
+3. The SDK handles redirecting traffic without having to setup its own VPN connection.
 
 ## API Definition
 
