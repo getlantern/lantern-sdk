@@ -1,9 +1,10 @@
 # Overview
-The Lantern SDK provides access to Lantern's infrastructure for accessing blocked apps and services. It is intended to be used by partners and third parties as an alternative route for VPN and proxy traffic, acting as a backup.
+The Lantern SDK provides access to the infrastructure of the Lantern circumvention tool. It is intended to be used by partners and third parties as an alternative or backup route for VPN and proxy traffic.
 
 ## High-Level Overview
 
-1.
+1. For each partner that wants to integrate the SDK, Lantern will generate an API key that is tied to usage data to distinguish traffic among providers.
+2. Each API key is tied to usage data such as bandwidth. 
 2. The SDK exposes an API that handles tunneling traffic through Lantern's infrastructure.
 3. 
 
@@ -15,15 +16,19 @@ data class ProxyInfo(
     val socksProxyPort: Int
 )
 interface LanternSDK {
+  // authenticate using API key and setup Lantern
   fun initialize(apiKey: String): Boolean
+  // start local HTTP and/or SOCKS proxies
   fun start(
     onSuccess: (proxyInfo: ProxyInfo) -> Unit,
     onFailure: (String) -> Unit
   )
-  fun disconnect(
+  // stop proxies and revert system-wide settings
+  fun stop(
     onSuccess: () -> Unit,
     onFailure: (String) -> Unit
   )
+  // set system-wide HTTP and SOCKS proxy settings
   fun setSystemProxy(
     proxyInfo: ProxyInfo,
     onSuccess: () -> Unit,
@@ -40,3 +45,4 @@ Start local HTTP and SOCKS proxies. You can choose to redirect traffic via these
 
 Below is an example of how you would integrate the SDK on Android.
 
+4. Monitor connection
