@@ -14,15 +14,25 @@ data class ProxyInfo(
     val httpProxyPort: Int,
     val socksProxyPort: Int
 )
+interface PacketInterceptor {
+    fun onPacketReceived(packet: ByteArray): ByteArray?
+}
+interface LanternTunnel {
+  fun sendPacket(packet: ByteArray)
+  fun setPacketInterceptor(interceptor: PacketInterceptor?)
+  fun close()
+}
 interface LanternSDK {
   // authenticate using API key and setup Lantern
   fun initialize(apiKey: String): Boolean
+  // create tunnel
+  fun createTunnel(): LanternTunnel
   // start local HTTP and/or SOCKS proxies
-  fun start(
+  fun startProxy(
     onSuccess: (proxyInfo: ProxyInfo) -> Unit,
     onFailure: (String) -> Unit
   )
-  // stop proxies and revert system-wide settings
+  // stop Lantern and revert system-wide settings
   fun stop(
     onSuccess: () -> Unit,
     onFailure: (String) -> Unit
@@ -75,7 +85,36 @@ Update your AndroidManifest.xml to include your API key that Lantern will use wh
 </application>
 ```
 
-3. Start Lantern local HTTP and SOCKS proxies
+3. Update your VpnService to implement LanternService to start forwarding packets to Lantern
+
+4. Implement LanternVpnService in your VpnService class:
+
+```kotlin
+class MyVpnService : VpnService(), LanternVpnService {
+
+    private lateinit var lanternTunnel: LanternTunnel
+
+    override fun onCreate() {
+        super.onCreate()
+        // set up the tunnel and start forwarding packets
+        lanternTunnel = Lantern.createTunnel(this)
+        // Add IP ranges, domains, or apps to be redirected
+        lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
+        lanternTunnel.addDomainToTunnel("example.com")
+        lanternTunnel.addAppToTunnel("com.example.app")
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+         // Capture packets from the VPN service
+         val packet = capturePacket()
+
+         // Send packet to Lantern's infrastructure
+         lanternTunnel.sendPacket(packet)
+     }
+}
+``` 
+
+5. Start Lantern local HTTP and SOCKS proxies
 
 ```Kotlin
 import org.getlantern.lantern.sdk.Lantern
