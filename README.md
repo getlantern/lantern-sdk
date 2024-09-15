@@ -45,3 +45,34 @@ Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies t
 Below is an example of how you would integrate the SDK on Android.
 
 4. Monitor connection
+
+
+## Add the Lantern SDK to your app
+
+1. In your module (app-level) Gradle file, add the dependency for the Lantern library for Android:
+
+```groovy
+dependencies {
+    implementation("org.getlantern.lantern:sdk:1.3.33")
+}
+```
+
+2. Initialize the SDK
+
+Update your AndroidManifest.xml to include your API key that Lantern will use when the SDK is initialized.
+
+```xml
+<application
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/AppTheme">
+
+    <!-- Lantern SDK -->
+    <meta-data
+        android:name="org.getlantern.lantern.sdk.API_KEY"
+        android:value="your-api-key" />
+
+</application>
+```
+
+
