@@ -12,18 +12,6 @@ The Lantern SDK provides access to the infrastructure of the Lantern circumventi
 ## API Definition
 
 ```kotlin
-data class ProxyInfo(
-    val httpProxyPort: Int,
-    val socksProxyPort: Int
-)
-interface PacketInterceptor {
-    fun onPacketReceived(packet: ByteArray): ByteArray?
-}
-interface LanternTunnel {
-  fun sendPacket(packet: ByteArray)
-  fun setPacketInterceptor(interceptor: PacketInterceptor?)
-  fun close()
-}
 interface LanternSDK {
   // authenticate using API key and setup Lantern
   fun initialize(apiKey: String): Boolean
@@ -45,6 +33,18 @@ interface LanternSDK {
     onSuccess: () -> Unit,
     onFailure: (String) -> Unit
   )
+}
+interface LanternTunnel {
+  fun sendPacket(packet: ByteArray)
+  fun setPacketInterceptor(interceptor: PacketInterceptor?)
+  fun close()
+}
+data class ProxyInfo(
+    val httpProxyPort: Int,
+    val socksProxyPort: Int
+)
+interface PacketInterceptor {
+    fun onPacketReceived(packet: ByteArray): ByteArray?
 }
 ```
 
