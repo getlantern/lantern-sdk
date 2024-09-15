@@ -37,10 +37,14 @@ interface LanternSDK {
 }
 
 interface LanternTunnel {
+  // Specify ip range that should be redirected to Lantern's infrastructure
   fun addIpRangeToTunnel(ip: String)
+  // Specify domain that should be redirected
   fun addDomainToTunnel(domain: String)
+  // Specify an app whose traffic should be redirected
   fun addAppToTunnel(app: String)
-  fun sendPacket(packet: ByteArray)
+
+  fun startForwarding(fileDescriptor: ParcelFileDescriptor)
   fun setPacketInterceptor(interceptor: PacketInterceptor?)
   fun close()
 }
