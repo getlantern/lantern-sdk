@@ -4,9 +4,8 @@ The Lantern SDK provides access to the infrastructure of the Lantern circumventi
 ## High-Level Overview
 
 1. For each partner that wants to integrate the SDK, Lantern will generate an API key that is tied to usage data to distinguish traffic among providers.
-2. The SDK exposes an API that handles tunneling traffic through Lantern's infrastructure.
-3. The SDK is able to redirect traffic without having to setup its own VPN connection.
-3. The SDK supports running in two modes: tunnel and system proxy.
+2. The SDK exposes an API that handles routing traffic through Lantern's infrastructure. It can be configured to use an HTTP/SOCKS system proxy along with traditional VPN tunneling.
+2. In tunnel mode, the SDK is able to redirect traffic without having to setup its own VPN connection.
 4. In system proxy mode, Lantern starts local HTTP and SOCKS proxies that partner apps can choose to redirect traffic to that is forwarded to Lantern's infrastructure.
 
 ## API Definition
