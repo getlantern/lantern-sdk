@@ -75,4 +75,22 @@ Update your AndroidManifest.xml to include your API key that Lantern will use wh
 </application>
 ```
 
+3. Start Lantern local HTTP and SOCKS proxies
 
+```Kotlin
+import org.getlantern.lantern.sdk.Lantern
+
+fun startLantern() {
+    Lantern.startLocalProxy(
+        onSuccess = { proxyInfo ->
+            Toast.makeText(this, "Proxies started on HTTP:${proxyInfo.httpProxyPort} and SOCKS:${proxyInfo.socksProxyPort}", Toast.LENGTH_LONG).show()
+            
+            // Optionally set system proxy
+            setSystemProxy(proxyInfo)
+        },
+        onFailure = { error ->
+            Toast.makeText(this, "Failed to start Lantern proxy: $error", Toast.LENGTH_SHORT).show()
+        }
+    )
+}
+```
