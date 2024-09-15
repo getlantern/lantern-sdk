@@ -33,6 +33,7 @@ interface LanternSDK {
     onFailure: (String) -> Unit
   )
 }
+
 interface LanternTunnel {
   fun addIpRangeToTunnel(ip: String)
   fun addDomainToTunnel(domain: String)
@@ -41,10 +42,12 @@ interface LanternTunnel {
   fun setPacketInterceptor(interceptor: PacketInterceptor?)
   fun close()
 }
+
 data class ProxyInfo(
     val httpProxyPort: Int,
     val socksProxyPort: Int
 )
+
 interface PacketInterceptor {
     fun onPacketReceived(packet: ByteArray): ByteArray?
 }
@@ -96,7 +99,7 @@ import org.getlantern.lantern.sdk.Lantern
 import org.getlantern.lantern.sdk.LanternTunnel
 import org.getlantern.lantern.sdk.VpnConnectionListener
 
-class MyVpnService : VpnService(), VpnConnectionListener {
+class MyVpnService : VpnService() {
 
     private lateinit var lanternTunnel: LanternTunnel
 
