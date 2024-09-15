@@ -102,19 +102,15 @@ class MyVpnService : VpnService(), LanternVpnService {
         lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
         lanternTunnel.addDomainToTunnel("example.com")
         lanternTunnel.addAppToTunnel("com.example.app")
-        // Set an interceptor to inspect/modify packets before forwarding
-        partnerTunnel.setPacketInterceptor(object : PacketInterceptor {
+        // Set an interceptor to inspect/modify received packets
+        lanternTunnel.setPacketInterceptor(object : PacketInterceptor {
             override fun onPacketReceived(packet: ByteArray): ByteArray? {
-                // Inspect or modify the packet here
-                // Return null to drop the packet
-                Log.i("MyVpnService", "Received packet of size: ${packet.size}")
-
-                // Logic to inspect and potentially drop packets
+                // Inspect or modify the packet here. Return null to drop the packet
                 if (shouldDropPacket(packet)) {
                     return null
                 }
 
-                // Return the packet to forward it to the local interface
+                // Forward packet to the local interface
                 return packet
             }
         })
