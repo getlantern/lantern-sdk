@@ -97,11 +97,29 @@ class MyVpnService : VpnService(), LanternVpnService {
     override fun onCreate() {
         super.onCreate()
         // set up the tunnel and start forwarding packets
-        lanternTunnel = Lantern.createTunnel(this)
+        lanternTunnel = Lantern.createTunnel()
         // Add IP ranges, domains, or apps to be redirected
         lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
         lanternTunnel.addDomainToTunnel("example.com")
         lanternTunnel.addAppToTunnel("com.example.app")
+        // start forwarding packets
+        lanternTunnel.startForwarding(this)
+        // Set an interceptor to inspect/modify packets before forwarding
+        partnerTunnel.setPacketInterceptor(object : PacketInterceptor {
+            override fun onPacketReceived(packet: ByteArray): ByteArray? {
+                // Inspect or modify the packet here
+                // Return null to drop the packet
+                Log.i("MyVpnService", "Received packet of size: ${packet.size}")
+
+                // Logic to inspect and potentially drop packets
+                if (shouldDropPacket(packet)) {
+                    return null
+                }
+
+                // Return the packet to forward it to the local interface
+                return packet
+            }
+        })
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
