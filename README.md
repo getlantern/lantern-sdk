@@ -102,8 +102,6 @@ class MyVpnService : VpnService(), LanternVpnService {
         lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
         lanternTunnel.addDomainToTunnel("example.com")
         lanternTunnel.addAppToTunnel("com.example.app")
-        // start forwarding packets
-        lanternTunnel.startForwarding(this)
         // Set an interceptor to inspect/modify packets before forwarding
         partnerTunnel.setPacketInterceptor(object : PacketInterceptor {
             override fun onPacketReceived(packet: ByteArray): ByteArray? {
@@ -120,6 +118,8 @@ class MyVpnService : VpnService(), LanternVpnService {
                 return packet
             }
         })
+        // start forwarding packets that match the above rules
+        lanternTunnel.startForwarding(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
