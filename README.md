@@ -34,6 +34,9 @@ interface LanternSDK {
   )
 }
 interface LanternTunnel {
+  fun addIpRangeToTunnel(ip: String)
+  fun addDomainToTunnel(domain: String)
+  fun addAppToTunnel(app: String)
   fun sendPacket(packet: ByteArray)
   fun setPacketInterceptor(interceptor: PacketInterceptor?)
   fun close()
