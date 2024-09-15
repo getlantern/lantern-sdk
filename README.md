@@ -146,7 +146,7 @@ class MyVpnService : VpnService() {
 }
 ``` 
 
-5. Start Lantern local HTTP and SOCKS proxies
+4. Start Lantern local HTTP and SOCKS proxies
 
 ```Kotlin
 import org.getlantern.lantern.sdk.Lantern
