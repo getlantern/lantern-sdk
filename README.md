@@ -94,15 +94,16 @@ Update your AndroidManifest.xml to include your API key that Lantern will use wh
 ```kotlin
 import org.getlantern.lantern.sdk.Lantern
 import org.getlantern.lantern.sdk.LanternTunnel
+import org.getlantern.lantern.sdk.VpnConnectionListener
 
-class MyVpnService : VpnService() {
+class MyVpnService : VpnService(), VpnConnectionListener {
 
     private lateinit var lanternTunnel: LanternTunnel
 
     override fun onCreate() {
         super.onCreate()
         // set up the tunnel and start forwarding packets
-        lanternTunnel = Lantern.createTunnel()
+        lanternTunnel = Lantern.createTunnel(this)
         // Add IP ranges, domains, or apps to be redirected
         lanternTunnel.addIpRangeToTunnel("192.168.1.0/24")
         lanternTunnel.addDomainToTunnel("example.com")
@@ -123,12 +124,23 @@ class MyVpnService : VpnService() {
         lanternTunnel.startForwarding(this)
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-         // Capture packets from the VPN service
-         val packet = capturePacket()
+    override fun onVpnDisconnected() {
+        lanternTunnel.close()
+    }
 
-         // Send packet to Lantern's infrastructure
-         lanternTunnel.sendPacket(packet)
+    override fun onVpnConnectionEstablished(fileDescriptor: ParcelFileDescriptor) {
+        // Start packet interception in the SDK
+        lanternTunnel.startForwarding(fileDescriptor)
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val builder = Builder()
+        builder.addAddress("10.0.0.2", 24)
+        builder.addRoute("0.0.0.0", 0)  // Route all traffic through VPN
+
+        // Create the VPN interface and provide the file descriptor to the SDK
+        vpnInterface = builder.establish()
+        onVpnConnectionEstablished(vpnInterface)
      }
 }
 ``` 
