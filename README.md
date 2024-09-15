@@ -3,7 +3,7 @@ This SDK provides access to the infrastructure of the Lantern circumvention tool
 
 ## High-Level Overview
 
-1. For each partner that integrates the SDK, Lantern will generate an API key that is tied to usage data to distinguish traffic among partners.
+1. For each partner that integrates the SDK, Lantern will generate an API key that is tied to usage data and used to distinguish traffic.
 2. The SDK exposes an API that handles routing traffic through Lantern's infrastructure. It can be configured to work with traditional VPN tunneling along with an HTTP/SOCKS system proxy.
 2. In tunnel mode, the SDK runs alongside a host VPN service and is able to redirect traffic without having to setup its own connection.
 4. In system proxy mode, Lantern starts local HTTP and SOCKS proxies that partner apps can choose to redirect traffic to that is forwarded on to Lantern's infrastructure.
@@ -68,7 +68,7 @@ Start local HTTP and SOCKS proxies. You can redirect traffic via these proxies t
 
 ## Add the Lantern SDK to your Android app
 
-1. In your module (app-level) Gradle file, add the dependency for the Lantern library for Android:
+1. In your module (app-level) Gradle file, add the dependency for the Lantern library:
 
 ```groovy
 dependencies {
@@ -78,7 +78,7 @@ dependencies {
 
 2. Initialize the SDK
 
-Update your AndroidManifest.xml to include your API key that Lantern will use when the SDK is initialized.
+Update your AndroidManifest.xml to include your API key that Lantern will reference when the SDK is initialized.
 
 ```xml
 <application
@@ -94,7 +94,7 @@ Update your AndroidManifest.xml to include your API key that Lantern will use wh
 </application>
 ```
 
-3. Update your VpnService to setup a tunnel with Lantern and start forwarding packets
+3. TUN mode: Update your VpnService to setup a tunnel with Lantern and start forwarding packets
 
 ```kotlin
 import org.getlantern.lantern.sdk.Lantern
@@ -146,7 +146,7 @@ class MyVpnService : VpnService() {
 }
 ``` 
 
-4. Start Lantern local HTTP and SOCKS proxies
+4. System proxy mode: Start Lantern local HTTP and SOCKS proxies
 
 ```Kotlin
 import org.getlantern.lantern.sdk.Lantern
