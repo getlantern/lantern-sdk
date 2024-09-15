@@ -138,9 +138,10 @@ class MyVpnService : VpnService(), VpnConnectionListener {
         builder.addAddress("10.0.0.2", 24)
         builder.addRoute("0.0.0.0", 0)  // Route all traffic through VPN
 
-        // Create the VPN interface and provide the file descriptor to the SDK
+        // Establish VPN connection
         vpnInterface = builder.establish()
-        onVpnConnectionEstablished(vpnInterface)
+        // Provide the interface to the SDK to start forwarding packets
+        lanternTunnel.startForwarding(vpnInterface)
      }
 }
 ``` 
