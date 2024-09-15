@@ -86,9 +86,7 @@ Update your AndroidManifest.xml to include your API key that Lantern will use wh
 </application>
 ```
 
-3. Update your VpnService to implement LanternService to start forwarding packets to Lantern
-
-4. Implement LanternVpnService in your VpnService class:
+3. Update your VpnService to setup a tunnel with Lantern and start forwarding packets
 
 ```kotlin
 class MyVpnService : VpnService(), LanternVpnService {
