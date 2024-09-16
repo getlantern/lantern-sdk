@@ -1,4 +1,4 @@
-# Overview
+# Lantern SDK
 This SDK provides access to the infrastructure of the Lantern circumvention tool. It allows partners and third parties to integrate Lantern as an alternative or backup solution for tunneling traffic.
 
 ## High-Level Overview
