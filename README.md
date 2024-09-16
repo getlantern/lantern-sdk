@@ -147,7 +147,7 @@ class MyVpnService : VpnService() {
 import org.getlantern.lantern.sdk.Lantern
 
 fun startLantern() {
-    Lantern.startLocalProxy(
+    Lantern.start(
         onSuccess = { proxyInfo ->
             Toast.makeText(this, "Proxies started on HTTP:${proxyInfo.httpProxyPort} and SOCKS:${proxyInfo.socksProxyPort}", Toast.LENGTH_LONG).show()
             
